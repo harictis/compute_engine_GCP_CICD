@@ -9,3 +9,6 @@ steps:
 
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY  # Change logging to use cloud logging only
