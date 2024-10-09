@@ -13,7 +13,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh instance-testing --zone=us-central1-c --tunnel-through-iap --command " echo 'Running deploy.sh...' && \
+        gcloud compute ssh instance-testing --zone=us-central1-c --command " echo 'Running deploy.sh...' && \
           bash ~/deploy.sh && \
           echo 'Deployment completed.'" --impersonate-service-account 382375060530@cloudbuild.gserviceaccount.com
 
