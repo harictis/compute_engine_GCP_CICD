@@ -14,7 +14,9 @@ steps:
       - '-c'
       - |
         set -x && \ 
-        gcloud compute ssh instance-testing --zone=us-central1-c --troubleshoot --tunnel-through-iap --command "bash ~/deploy.sh"
+        gcloud compute ssh instance-testing --zone=us-central1-c --tunnel-through-iap --command " echo 'Running deploy.sh...' && \
+          bash ~/deploy.sh && \
+          echo 'Deployment completed.'"
 
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
