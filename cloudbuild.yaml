@@ -15,7 +15,7 @@ steps:
       - |
         gcloud compute ssh instance-testing --zone=us-central1-c --command " echo 'Running deploy.sh...' && \
           bash ~/deploy.sh && \
-          echo 'Deployment completed.'" --impersonate-service-account 382375060530@cloudbuild.gserviceaccount.com
+          echo 'Deployment completed.'" 
 
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
