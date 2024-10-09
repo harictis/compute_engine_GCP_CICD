@@ -14,7 +14,7 @@ steps:
       - 'ssh'
       - 'instance-testing'  # Your instance name
       - '--zone'
-      - 'us-central1-a'  # Replace with your zone
+      - 'us-central1-c'  # Replace with your zone
       - '--command'
       - 'bash ~/deploy.sh'  # Update this path if necessary based on where the script is located
 
