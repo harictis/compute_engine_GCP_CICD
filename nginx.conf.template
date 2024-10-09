@@ -1,0 +1,25 @@
+# nginx.conf.template
+user  nginx;
+worker_processes  auto;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen ${NGINX_PORT};  # This will be replaced by the startup script
+        server_name localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+    }
+}
