@@ -9,11 +9,14 @@ steps:
 
   # Step 3: SSH into the instance and run the deployment script
   - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        gcloud compute ssh instance-testing --zone us-central1-c --command "bash ~/deploy.sh"
+      - 'compute'
+      - 'ssh'
+      - 'instance-testing'  # Your instance name
+      - '--zone'
+      - 'us-central1-a'  # Replace with your zone
+      - '--command'
+      - 'bash ~/deploy.sh'  # Update this path if necessary based on where the script is located
 
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
