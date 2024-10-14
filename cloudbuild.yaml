@@ -11,7 +11,7 @@ steps:
  
 # ... other steps ...
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'instance-testing', '--zone', 'your-zone','--', 'bash', 'deploy.sh']  # Note the separation
+    args: ['compute', 'ssh', 'instance-testing', '--zone', 'us-central1-c','--', 'bash', 'deploy.sh']  # Note the separation
    
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
