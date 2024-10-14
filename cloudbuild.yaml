@@ -9,7 +9,7 @@ steps:
 
   # Step 3: SSH into the instance and run the deployment script
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'instance-testing', '--', 'bash', '~/deploy.sh']
+    args: ['compute', 'ssh', 'instance-testing', '--zone', 'us-central1-c', 'bash', '~/deploy.sh']
 
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
