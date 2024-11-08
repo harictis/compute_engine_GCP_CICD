@@ -15,6 +15,7 @@ steps:
       - |
         gcloud compute ssh instance-testing \
           --project=$PROJECT_ID \
+          --tunnel-through-iap \
           --zone=us-central1-c \
           --command="bash deploy.sh"
 
