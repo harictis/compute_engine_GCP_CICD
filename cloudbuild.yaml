@@ -7,23 +7,22 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nginx-custom:latest']
 
-
-  # Step 4: SSH into the instance and run the deployment script
- steps:
-  # Step 1: SSH into the instance through IAP and run a command
+  # Step 3: SSH into the instance through IAP and run the deployment script
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        gcloud compute ssh INSTANCE_NAME \
+        gcloud compute ssh instance-testing \
           --project=$PROJECT_ID \
-          --zone=ZONE \
+          --zone=us-central1-c \
           --tunnel-through-iap \
           --command="bash deploy.sh"
+
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
 
 options:
-  logging: CLOUD_LOGGING_ONLY  # Change logging to use cloud logging only
+  logging: CLOUD_LOGGING_ONLY  # Use Cloud Logging only
+
 
