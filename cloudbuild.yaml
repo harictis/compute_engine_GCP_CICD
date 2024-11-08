@@ -7,22 +7,20 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nginx-custom:latest']
 
-  # Step 3: SSH into the instance through IAP and run the deployment script
+  # Step 3: Deploy the container to the Compute Engine instance using `update-container`
   - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
     args:
-      - '-c'
-      - |
-        gcloud compute ssh instance-testing \
-          --project=$PROJECT_ID \
-          --tunnel-through-iap \
-          --zone=us-central1-c \
-          --command="bash deploy.sh"
+      - 'compute'
+      - 'instances'
+      - 'update-container'
+      - 'instance-20241108-103346'  # Using instance name 'yokai'
+      - '--zone=us-central1-a'
+      - '--container-image=gcr.io/$PROJECT_ID/nginx-custom:latest'
+      - '--container-restart-policy=always'  # Optional: configure as needed    # Optional: pass arguments to container
+       # Optional: set environment variables
 
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
 
 options:
-  logging: CLOUD_LOGGING_ONLY  # Use Cloud Logging only
-
-
+  logging: CLOUD_LOGGING_ONLY
