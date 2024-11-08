@@ -7,33 +7,23 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/nginx-custom:latest']
 
-  # Step 3: Retrieve SSH Key from Secret Manager
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'Retrieve SSH Key from Secret Manager'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        mkdir -p /builder/home/.ssh
-        echo "$SSH_PRIVATE_KEY" > /builder/home/.ssh/id_rsa
-        chmod 600 /builder/home/.ssh/id_rsa
 
   # Step 4: SSH into the instance and run the deployment script
+ steps:
+  # Step 1: SSH into the instance through IAP and run a command
   - name: 'gcr.io/cloud-builders/gcloud'
-    id: 'SSH into the instance'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        ssh -o "StrictHostKeyChecking=no" -i /builder/home/.ssh/id_rsa \
-        user@INSTANCE_IP 'bash deploy.sh'  # Adjust the script path as needed
-
+        gcloud compute ssh INSTANCE_NAME \
+          --project=$PROJECT_ID \
+          --zone=ZONE \
+          --tunnel-through-iap \
+          --command="bash deploy.sh"
 images:
   - 'gcr.io/$PROJECT_ID/nginx-custom:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Change logging to use cloud logging only
 
-secrets:
-  - secretEnv:
-      SSH_PRIVATE_KEY: projects/[PROJECT_ID]/secrets/my-ssh-key/versions/latest
